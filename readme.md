@@ -190,6 +190,68 @@ hr {
 
 ```
 
+## Adding new data to steuerfuesst.json
+Data for 2025 was recieved in an excel file like this:
+| Gemeinde       | Kanton NP            % | Kanton JP            % | Gemeinde       NP % | Gemeinde       JP % | evang.ref.    % | röm.-kath.     % | chr.-kath.<br>     % |
+| -------------- | ---------------------- | ---------------------- | ------------------- | ------------------- | --------------- | ---------------- | -------------------- |
+| Bargen         | 79                     | 98                     | 102                 | 102                 | 12              | 13               | 12.5                 |
+| Beggingen      | 79                     | 98                     | 117                 | 95                  | 12              | 14               | 12.5                 |
+| Beringen       | 79                     | 98                     | 91                  | 91                  | B12/G10         | 14               | 12.5                 |
+| Buch           | 79                     | 98                     | 96                  | 96                  | 12              | 15               | 12.5                 |
+| Buchberg       | 79                     | 98                     | 59                  | 47                  | 11              | 14               | 12.5                 |
+| Büttenhardt    | 79                     | 98                     | 85                  | 85                  | 11              | 13               | 12.5                 |
+| Dörflingen     | 79                     | 98                     | 88                  | 88                  | 12              | 13               | 12.5                 |
+| Gächlingen     | 79                     | 98                     | 115                 | 115                 | 13              | 14               | 12.5                 |
+| Hallau         | 79                     | 98                     | 112                 | 112                 | 10              | 14               | 12.5                 |
+| Hemishofen     | 79                     | 98                     | 89                  | 89                  | 11.5            | 13               | 12.5                 |
+| Löhningen      | 79                     | 98                     | 93                  | 93                  | 10              | 14               | 12.5                 |
+| Lohn           | 79                     | 98                     | 98                  | 98                  | 11              | 13               | 12.5                 |
+| Merishausen    | 79                     | 98                     | 110                 | 102                 | 12              | 13               | 12.5                 |
+| Neuhausen      | 79                     | 98                     | 83                  | 93                  | 14              | 14               | 12.5                 |
+| Neunkirch      | 79                     | 98                     | 99                  | 89                  | 11              | 14               | 12.5                 |
+| Oberhallau     | 79                     | 98                     | 117                 | 117                 | 12              | 14               | 12.5                 |
+| Ramsen         | 79                     | 98                     | 95                  | 95                  | 14              | 15               | 12.5                 |
+| Rüdlingen      | 79                     | 98                     | 75                  | 70                  | 11              | 14               | 12.5                 |
+| Schaffhausen   | 79                     | 98                     | 86                  | 93                  | SH13/H13        | 13               | 12.5                 |
+| Schleitheim    | 79                     | 98                     | 115                 | 105                 | 10              | 14               | 12.5                 |
+| Siblingen      | 79                     | 98                     | 105                 | 90                  | 12              | 14               | 12.5                 |
+| Stein am Rhein | 79                     | 98                     | 95                  | 95                  | St11.5/B12      | 13               | 12.5                 |
+| Stetten        | 79                     | 98                     | 61                  | 49                  | 11              | 13               | 12.5                 |
+| Thayngen       | 79                     | 98                     | 92                  | 92                  | T10/UR10        | 13               | 12.5                 |
+| Trasadingen    | 79                     | 98                     | 112                 | 97                  | 11              | 14               | 12.5                 |
+| Wilchingen     | 79                     | 98                     | 112                 | 112                 | W9/O11          | 14               | 12.5                 |
+
+From this, either extract data to json in excel, or use something like [tableconvert.com](https://tableconvert.com/excel-to-json).
+Then make sure to regex replace Column names so they match like previous year.
+Also split up rows with two "Gemeinden" like this:
+
+| Gemeinde       | Kanton NP            % | Kanton JP            % | Gemeinde       NP % | Gemeinde       JP % | evang.ref.    % | röm.-kath.     % | chr.-kath.<br>     % |
+| -------------- | ---------------------- | ---------------------- | ------------------- | ------------------- | --------------- | ---------------- | -------------------- |
+| Thayngen | 79  | 98  | 92  | 92  | <b style="background-color:#eb4034;">T10/UR10</b> | 13  | 12.5 |
+
+into this:
+
+``` json 
+    ...
+        {
+            "Gemeinde": "Thayngen",
+            "natPers": "92",
+            "jurPers": "92",
+            "evangR": "10",
+            "roemK": "13",
+            "christK": "12.5"
+        },
+        {
+            "Gemeinde": "Thayngen (Unterer Reiat)",
+            "natPers": "92",
+            "jurPers": "92",
+            "evangR": "10",
+            "roemK": "13",
+            "christK": "12.5"
+        },
+    ...
+```
+
 ## :desktop_computer: Browser Support
 Mit folgenden Browsern wurde bereits getestet:
 
