@@ -190,7 +190,7 @@ hr {
 
 ```
 
-## Adding new data to steuerfuesst.json
+## Adding new data to steuerfuesse.json
 Data for 2025 was recieved in an excel file like this:
 | Gemeinde       | Kanton NP            % | Kanton JP            % | Gemeinde       NP % | Gemeinde       JP % | evang.ref.    % | röm.-kath.     % | chr.-kath.<br>     % |
 | -------------- | ---------------------- | ---------------------- | ------------------- | ------------------- | --------------- | ---------------- | -------------------- |
