@@ -1,130 +1,183 @@
-function showresults(efftax) {
+// --- small helpers ---
+const moneyFmt = new Intl.NumberFormat("de-CH", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
-    // steuerjahr & gemeinde auslesen
-    let steuerjahr = document.getElementById('slsteuerjahr').value;
-    let gemeinde = document.getElementById('slgemeinde').value;
-
-    // einlesen von divs, lbl's und txtXYZ feldern
-    let diveinfachesteuer = document.getElementById("diveinfachesteuer");
-    let txteinfachesteuer = document.getElementById("txteinfachesteuer");
-    diveinfachesteuer.hidden = false
-    txteinfachesteuer.value = parseFloat(efftax).toLocaleString("de-CH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    let txtkantonssteuer = document.getElementById("txtkantonssteuer");
-    let lblkantonssteuer = document.getElementById("lblkantonssteuer");
-    let divkantonssteuer = document.getElementById("divkantonssteuer");
-
-    let txtgemeindesteuer = document.getElementById("txtgemeindesteuer");
-    let lblgemeindesteuer = document.getElementById("lblgemeindesteuer");
-    let divgemeindesteuer = document.getElementById("divgemeindesteuer");
-
-    let txtkirchensteuer = document.getElementById("txtkirchensteuer");
-    let lblkirchensteuer = document.getElementById("lblkirchensteuer");
-    let divkirchensteuer = document.getElementById("divkirchensteuer");
-
-    let divkonfessionen = document.getElementById('divkonfessionen');
-    let konfessionselects = divkonfessionen.getElementsByTagName("select");
-
-    let divTotalSteuer = document.getElementById('divtotalsteuer');
-    let txtefftax = document.getElementById('txtefftax');
-
-    document.getElementById('hrtrenner').hidden = false;
-
-    if (!txtkantonssteuer || !lblkantonssteuer || !divkantonssteuer ||
-        !txtgemeindesteuer || !lblgemeindesteuer || !divgemeindesteuer ||
-        !txtkirchensteuer || !divTotalSteuer) {
-        console.error("One or more DOM elements are not found.");
-        return;
-    }
-
-    // Sanitize and display
-    lblkantonssteuer.innerText = "Anteil Kantonssteuer";
-    lblgemeindesteuer.innerText = "Anteil Gemeindesteuer";
-    lblkirchensteuer.innerText = "Anteil Kirchensteuer";
-
-    // Daten für gewählte gemeinde/Kanton pro Jahr auslesen
-    let selectedGemeinde = dataGlobal[steuerjahr].find(item => item.Gemeinde === gemeinde);
-    let selectedKanton = dataGlobal[steuerjahr].find(item => item.Gemeinde === "Kanton");
-
-    // Fehlerausgabe falls nicht gefunden
-    if (!selectedGemeinde || !selectedKanton) {
-        console.error("Selected gemeinde or kanton data not found.");
-        return;
-    }
-
-    // definieren von gemeindesteuer & kantonssteuer anhand ausgewählter gemeinde + jahr
-    let gemeindesteuer = (Math.ceil((efftax * (selectedGemeinde.natPers / 100)) * 20) / 20);
-    let kantonssteuer = (Math.ceil((efftax * (selectedKanton.natPers / 100)) * 20) / 20);
-
-    // Anpassen des textfeldes & des labels für kantons/gemeindesteuern
-    txtkantonssteuer.value = kantonssteuer.toLocaleString("de-CH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    lblkantonssteuer.innerText += ` (${selectedKanton.natPers}%)`;
-    divkantonssteuer.hidden = false;
-
-    txtgemeindesteuer.value = gemeindesteuer.toLocaleString("de-CH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    lblgemeindesteuer.innerText += ` (${selectedGemeinde.natPers}%)`;
-    divgemeindesteuer.hidden = false;
-
-    // nullen von bisherigen werten
-    let validValues = [];
-    let sumValidValues = 0;
-
-    // Collect valid values from the select elements
-    Array.from(konfessionselects).forEach(item => {
-        if (item.value != "") {
-            sumValidValues++;
-            validValues.push(item.value);
-        }
-    });
-
-    // Befüllen von Anzahl konfessionen
-    let roemKCount = validValues.filter(value => value === "roemK").length;
-    let christKCount = validValues.filter(value => value === "christK").length;
-    let evangRCount = validValues.filter(value => value === "evangR").length;
-    let ohneCount = validValues.filter(value => value === "Andere").length;
-
-    // Calculate the tax for each konfession
-    let roemKTax = (efftax * selectedGemeinde["roemK"] / 100 / sumValidValues) * roemKCount;
-    let christKTax = (efftax * selectedGemeinde["christK"] / 100 / sumValidValues) * christKCount;
-    let evangRTax = (efftax * selectedGemeinde["evangR"] / 100 / sumValidValues) * evangRCount;
-    let ohneTax = 0;
-
-    let totalChurchTax = roemKTax + christKTax + evangRTax + ohneTax;
-
-    // Construct detailed tax breakdown
-    let breakdown = [];
-    if (roemKCount > 0) {
-        breakdown.push(`${roemKCount}x Röm. Katholisch, ${selectedGemeinde["roemK"]}%`);
-    }
-    if (christKCount > 0) {
-        breakdown.push(`${christKCount}x Christl. Katholisch, ${selectedGemeinde["christK"]}%`);
-    }
-    if (evangRCount > 0) {
-        breakdown.push(`${evangRCount}x Evang. Reformiert, ${selectedGemeinde["evangR"]}%`);
-    }
-    if (ohneCount > 0) {
-        breakdown.push(`${ohneCount}x Andere, 0%`);
-    }
-    // Textanpassung des Kirchensteuer labels
-    lblkirchensteuer.innerText = `Kirchensteuer:
-     ${breakdown.join(" / ")}`;
-
-    // Falls kirchensteuer grösser als 0, anzeigen
-    if (totalChurchTax > 0) {
-        txtkirchensteuer.value = totalChurchTax.toLocaleString("de-CH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        divkirchensteuer.hidden = false;
-    } else {
-        txtkirchensteuer.value = 0;
-        divkirchensteuer.hidden = true;
-    }
-
-
-    // Total aller steuern berechnen
-    let totalTax = parseFloat(kantonssteuer) + parseFloat(gemeindesteuer) + parseFloat(totalChurchTax);
-    txtefftax.value = totalTax.toLocaleString("de-CH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-    // Div aller steuern anzeigen nach berechnungen
-    divTotalSteuer.hidden = false;
+function fmtMoney(n) {
+  const v = Number(n) || 0;
+  return moneyFmt.format(v);
 }
+
+// rounds up to nearest 0.05 (because *20 /20)
+function roundUpTo005(x) {
+  return Math.ceil(Number(x) * 20) / 20;
+}
+
+function $(id) {
+  return document.getElementById(id);
+}
+
+function setShown(el, shown) {
+  if (el) el.hidden = !shown;
+}
+
+function setText(el, text) {
+  if (el) el.innerText = text;
+}
+
+function setValue(el, value) {
+  if (el) el.value = value;
+}
+
+function requireEls(ids) {
+  const els = Object.fromEntries(ids.map(id => [id, $(id)]));
+  const missing = Object.entries(els).filter(([, el]) => !el).map(([id]) => id);
+  if (missing.length) {
+    console.error("Missing DOM elements:", missing);
+    return null;
+  }
+  return els;
+}
+
+// --- domain logic ---
+function getGemeindeAndKanton(steuerjahr, gemeinde) {
+  const yearData = dataGlobal?.[steuerjahr];
+  if (!yearData) return { selectedGemeinde: null, selectedKanton: null };
+
+  return {
+    selectedGemeinde: yearData.find(item => item.Gemeinde === gemeinde) ?? null,
+    selectedKanton: yearData.find(item => item.Gemeinde === "Kanton") ?? null,
+  };
+}
+
+function calcShareTax(efftax, percent) {
+  return roundUpTo005(efftax * (Number(percent) / 100));
+}
+
+function countKonfessionen(selectElements) {
+  const values = Array.from(selectElements)
+    .map(s => s.value)
+    .filter(v => v !== "");
+
+  const totalPeople = values.length;
+
+  const counts = {
+    roemK: values.filter(v => v === "roemK").length,
+    christK: values.filter(v => v === "christK").length,
+    evangR: values.filter(v => v === "evangR").length,
+    Andere: values.filter(v => v === "Andere").length,
+  };
+
+  return { totalPeople, counts };
+}
+
+function calcChurchTax(efftax, gemeindeData, konfessionSelects) {
+  const { totalPeople, counts } = countKonfessionen(konfessionSelects);
+
+  if (totalPeople === 0) {
+    return { total: 0, breakdownLabel: "Kirchensteuer:" };
+  }
+
+  // rate per konfession is from gemeindeData[code], distributed by number of people selected
+  const taxParts = {
+    roemK: (efftax * (Number(gemeindeData.roemK) / 100) / totalPeople) * counts.roemK,
+    christK: (efftax * (Number(gemeindeData.christK) / 100) / totalPeople) * counts.christK,
+    evangR: (efftax * (Number(gemeindeData.evangR) / 100) / totalPeople) * counts.evangR,
+    Andere: 0,
+  };
+
+  const total = taxParts.roemK + taxParts.christK + taxParts.evangR + taxParts.Andere;
+
+  const breakdown = [];
+  if (counts.roemK) breakdown.push(`${counts.roemK}x Röm. Katholisch, ${gemeindeData.roemK}%`);
+  if (counts.christK) breakdown.push(`${counts.christK}x Christl. Katholisch, ${gemeindeData.christK}%`);
+  if (counts.evangR) breakdown.push(`${counts.evangR}x Evang. Reformiert, ${gemeindeData.evangR}%`);
+  if (counts.Andere) breakdown.push(`${counts.Andere}x Andere, 0%`);
+
+  return {
+    total,
+    breakdownLabel: `Kirchensteuer:\n ${breakdown.join(" / ")}`,
+  };
+}
+
+// --- refactored showresults ---
+function showresults(efftax) {
+  const els = requireEls([
+    "slsteuerjahr",
+    "slgemeinde",
+    "hrtrenner",
+    "diveinfachesteuer",
+    "txteinfachesteuer",
+    "txtkantonssteuer",
+    "lblkantonssteuer",
+    "divkantonssteuer",
+    "txtgemeindesteuer",
+    "lblgemeindesteuer",
+    "divgemeindesteuer",
+    "txtkirchensteuer",
+    "lblkirchensteuer",
+    "divkirchensteuer",
+    "divkonfessionen",
+    "divtotalsteuer",
+    "txtefftax",
+  ]);
+  if (!els) return;
+
+  const eff = Number(efftax);
+  const steuerjahr = els.slsteuerjahr.value;
+  const gemeinde = els.slgemeinde.value;
+
+  setShown(els.hrtrenner, true);
+
+  // einfache Steuer always shown
+  setShown(els.diveinfachesteuer, true);
+  setValue(els.txteinfachesteuer, fmtMoney(eff));
+
+  // load data
+  const { selectedGemeinde, selectedKanton } = getGemeindeAndKanton(steuerjahr, gemeinde);
+  if (!selectedGemeinde || !selectedKanton) {
+    console.error("Selected gemeinde or kanton data not found.", { steuerjahr, gemeinde });
+    return;
+  }
+
+  // labels (static part)
+  setText(els.lblkantonssteuer, "Anteil Kantonssteuer");
+  setText(els.lblgemeindesteuer, "Anteil Gemeindesteuer");
+
+  // compute shares
+  const kantonssteuer = calcShareTax(eff, selectedKanton.natPers);
+  const gemeindesteuer = calcShareTax(eff, selectedGemeinde.natPers);
+
+  // write shares
+  setValue(els.txtkantonssteuer, fmtMoney(kantonssteuer));
+  setText(els.lblkantonssteuer, `Anteil Kantonssteuer (${selectedKanton.natPers}%)`);
+  setShown(els.divkantonssteuer, true);
+
+  setValue(els.txtgemeindesteuer, fmtMoney(gemeindesteuer));
+  setText(els.lblgemeindesteuer, `Anteil Gemeindesteuer (${selectedGemeinde.natPers}%)`);
+  setShown(els.divgemeindesteuer, true);
+
+  // church tax
+  const konfessionSelects = els.divkonfessionen.getElementsByTagName("select");
+  const church = calcChurchTax(eff, selectedGemeinde, konfessionSelects);
+
+  setText(els.lblkirchensteuer, church.breakdownLabel);
+
+  if (church.total > 0) {
+    setValue(els.txtkirchensteuer, fmtMoney(church.total));
+    setShown(els.divkirchensteuer, true);
+  } else {
+    setValue(els.txtkirchensteuer, fmtMoney(0));
+    setShown(els.divkirchensteuer, false);
+  }
+
+  // total
+  const totalTax = Number(kantonssteuer) + Number(gemeindesteuer) + Number(church.total);
+  setValue(els.txtefftax, fmtMoney(totalTax));
+  setShown(els.divtotalsteuer, true);
+}
+
 
 function calculatetax(amount, totalmonate) {
 
