@@ -1,4 +1,262 @@
 {
+    "2026": [
+        {
+            "Gemeinde": "Bargen",
+            "natPers": "102",
+            "jurPers": "102",
+            "evangR": "12",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Beggingen",
+            "natPers": "114",
+            "jurPers": "99",
+            "evangR": "12",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Beringen",
+            "natPers": "91",
+            "jurPers": "91",
+            "evangR": "12",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Beringen (Guntmadingen)",
+            "natPers": "91",
+            "jurPers": "91",
+            "evangR": "10",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Buch",
+            "natPers": "96",
+            "jurPers": "96",
+            "evangR": "12",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Buchberg",
+            "natPers": "59",
+            "jurPers": "47",
+            "evangR": "11",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Büttenhardt",
+            "natPers": "85",
+            "jurPers": "85",
+            "evangR": "11",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Dörflingen",
+            "natPers": "98",
+            "jurPers": "98",
+            "evangR": "12",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Gächlingen",
+            "natPers": "115",
+            "jurPers": "115",
+            "evangR": "13",
+            "roemK": "14",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Hallau",
+            "natPers": "112",
+            "jurPers": "112",
+            "evangR": "13",
+            "roemK": "14",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Hemishofen",
+            "natPers": "89",
+            "jurPers": "89",
+            "evangR": "11.5",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Löhningen",
+            "natPers": "93",
+            "jurPers": "93",
+            "evangR": "13",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Lohn",
+            "natPers": "98",
+            "jurPers": "98",
+            "evangR": "12",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Merishausen",
+            "natPers": "110",
+            "jurPers": "102",
+            "evangR": "12",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Neuhausen",
+            "natPers": "78",
+            "jurPers": "93",
+            "evangR": "14",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Neunkirch",
+            "natPers": "99",
+            "jurPers": "89",
+            "evangR": "11",
+            "roemK": "14",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Oberhallau",
+            "natPers": "117",
+            "jurPers": "117",
+            "evangR": "12",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Ramsen",
+            "natPers": "99",
+            "jurPers": "99",
+            "evangR": "14",
+            "roemK": "14",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Rüdlingen",
+            "natPers": "80",
+            "jurPers": "75",
+            "evangR": "11",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Schaffhausen",
+            "natPers": "83",
+            "jurPers": "93",
+            "evangR": "13",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Schaffhausen (Herblingen)",
+            "natPers": "83",
+            "jurPers": "93",
+            "evangR": "13",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Schleitheim",
+            "natPers": "115",
+            "jurPers": "105",
+            "evangR": "10",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Siblingen",
+            "natPers": "105",
+            "jurPers": "90",
+            "evangR": "12",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Stein am Rhein",
+            "natPers": "95",
+            "jurPers": "95",
+            "evangR": "11.5",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Stein am Rhein (Buch)",
+            "natPers": "95",
+            "jurPers": "95",
+            "evangR": "12",
+            "roemK": "15",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Stetten",
+            "natPers": "65",
+            "jurPers": "53",
+            "evangR": "11",
+            "roemK": "13",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Thayngen",
+            "natPers": "92",
+            "jurPers": "92",
+            "evangR": "10",
+            "roemK": "14",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Thayngen (Reiat)",
+            "natPers": "92",
+            "jurPers": "92",
+            "evangR": "10",
+            "roemK": "14",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Trasadingen",
+            "natPers": "92",
+            "jurPers": "97",
+            "evangR": "11",
+            "roemK": "14",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Wilchingen",
+            "natPers": "112",
+            "jurPers": "112",
+            "evangR": "9",
+            "roemK": "14",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Wilchingen (Osterfingen)",
+            "natPers": "112",
+            "jurPers": "112",
+            "evangR": "11",
+            "roemK": "14",
+            "christK": "13.5"
+        },
+        {
+            "Gemeinde": "Kanton",
+            "natPers": "76",
+            "jurPers": "98",
+            "evangR": "0",
+            "roemK": "0",
+            "christK": "0"
+        }
+    ],
     "2025": [
         {
             "Gemeinde": "Bargen",

@@ -263,7 +263,7 @@ Mit folgenden Browsern wurde bereits getestet:
 
 ## :email: Kontakt
 ### Steuerverwaltung
-- [Informatik Steuerverwaltung](informatik.stv@sh.ch)
+- [Informatik Steuerverwaltung](mailto:informatik.stv@sh.ch)
 - [Markus Schwyn](mailto:markus.schwyn@sh.ch)
 - [Nina Blanz](mailto:nina.blanz@sh.ch)
 
