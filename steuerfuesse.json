@@ -209,6 +209,14 @@
             "evangR": "11",
             "roemK": "14",
             "christK": "13"
+        },
+		{
+            "Gemeinde": "Kanton",
+            "natPers": "76",
+            "jurPers": "98",
+            "evangR": "0",
+            "roemK": "0",
+            "christK": "0"
         }
     ],
     "2025": [
